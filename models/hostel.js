@@ -1,19 +1,21 @@
 import mongoose from "mongoose";
+import Room from "./room.js";
+import RoomOccupation from "./room-occupation.js";
 
 const Schema = mongoose.Schema;
 
 const hostelSchema = new Schema({
-    name: {
-        type: String,
-        required: true
+    creator: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: false
     },
-    block_count: {
+    name: {
         type: String,
         required: true
     },
     manager: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: "User"
     },
     facilities: {
@@ -38,8 +40,16 @@ const hostelSchema = new Schema({
         type: String
     },
     location: {
-        type: "Point",
-        coordinates: [Number]
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: "Point",
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
     },
     address: {
         country: {
@@ -65,6 +75,12 @@ const hostelSchema = new Schema({
         }
     }
 }, {timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true}});
+
+hostelSchema.post('remove', async function (next) {
+    await Room.deleteMany({hostel: this._id});
+    await RoomOccupation.deleteMany({hostel: this._id});
+    next();
+});
 
 hostelSchema.virtual('room_count', {
     localField: '_id',
