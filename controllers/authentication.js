@@ -40,7 +40,17 @@ export const login = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        res.status(200).json({message: `Account created successfully`});
+        const updates = Object.keys(req.body);
+        const allowedUpdates = ['name', 'phone', 'image', 'password', 'occupation', 'dob'];
+        const isAllowed = updates.every(update => allowedUpdates.includes(update));
+        if(!isAllowed){
+            return res.status(400).json({data: null, message: `Updates not allowed`});
+        }
+        for(let key of updates){
+            req.user[key] = req.body[key];
+        }
+        await req.user.save();
+        res.status(200).json({message: `Account created successfully`, data: req.user});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
@@ -49,7 +59,7 @@ export const updateProfile = async (req, res) => {
 
 export const getMe = async (req, res) => {
     try {
-        res.status(200).json({message: `Account created successfully`});
+        res.status(200).json({message: `Account retrieved`, data: req.user, token: req.token});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
