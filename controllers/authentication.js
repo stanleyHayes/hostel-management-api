@@ -68,7 +68,9 @@ export const getMe = async (req, res) => {
 
 export const deleteProfile = async (req, res) => {
     try {
-        res.status(200).json({message: `Account created successfully`});
+        req.user.status = 'DELETED';
+        await req.user.save();
+        res.status(200).json({message: `Account deleted successfully`, data: req.user});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
