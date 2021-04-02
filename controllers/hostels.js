@@ -54,7 +54,7 @@ export const getHostel = async (req, res) => {
 export const updateHostel = async (req, res) => {
     try {
         const updates = Object.keys(req.body);
-        const allowedUpdates = ['name', 'facilities', 'address']
+        const allowedUpdates = ['name', 'facilities', 'address'];
     } catch (e) {
         return res.status(500).json({message: e.message});
     }

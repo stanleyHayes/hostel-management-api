@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config({path: "./config/config.env"});
 import hostelRoutes from "./routes/hostels.js";
+import userRoutes from "./routes/users.js";
 
 mongoose.connect(process.env.MONGODB_URI, {
     useFindAndModify: false,
@@ -30,6 +31,7 @@ app.use(morgan("tiny"));
 app.use(express.json());
 
 app.use('/api/v1/hostels', hostelRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.listen(PORT, HOSTNAME, () => {
     console.log(`Server connected in ${process.env.NODE_ENV} mode on port ${PORT}`);
