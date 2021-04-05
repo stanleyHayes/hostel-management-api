@@ -40,7 +40,6 @@ app.use('/api/v1/hostels', hostelRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authenticationRoutes);
 app.use('/api/v1/rooms', roomRoutes);
-
 app.use('/api/v1/reviews', reviewRoutes);
 app.use('/api/v1/complaints', complaintRoutes);
 app.use('/api/v1/managers-occupations', managerOccupationsRoutes);
