@@ -8,7 +8,7 @@ const hostelSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
         ref: "User",
-        required: false
+        required: true
     },
     name: {
         type: String,
@@ -73,7 +73,12 @@ const hostelSchema = new Schema({
         streetName: {
             type: String
         }
-    }
+    },
+    status: {
+        type: String,
+        enum: ['VACANT', 'DELETED', 'FULL'],
+        default: 'VACANT'
+    },
 }, {timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true}});
 
 hostelSchema.post('remove', async function (next) {

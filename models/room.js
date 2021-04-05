@@ -11,7 +11,7 @@ const roomSchema = new Schema({
         type: String,
         required: true
     },
-    bed_count: {
+    bedCount: {
         type: Number,
         required: true
     },
@@ -35,9 +35,19 @@ const roomSchema = new Schema({
     gallery: {
         type: [String]
     },
-    main_image: {
+    image: {
         type: String
-    }
+    },
+    creator: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
+    status: {
+        type: String,
+        enum: ['FULL', 'DELETED', 'AVAILABLE'],
+        default: 'AVAILABLE'
+    },
 }, {timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true}});
 
 

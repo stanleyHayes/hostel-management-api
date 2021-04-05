@@ -24,7 +24,7 @@ export const auth = async (req, res, next) => {
     }
 }
 
-export const authorize = async (...roles) => {
+export const authorize = (...roles) => {
     return (req, res, next) => {
         if (roles.includes(req.user.role)) {
             next();
