@@ -9,6 +9,7 @@ dotenv.config({path: "./config/config.env"});
 import hostelRoutes from "./routes/hostels.js";
 import userRoutes from "./routes/users.js";
 import authenticationRoutes from "./routes/authentication.js";
+import roomRoutes from "./routes/rooms.js";
 
 mongoose.connect(process.env.MONGODB_URI, {
     useFindAndModify: false,
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use('/api/v1/hostels', hostelRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authenticationRoutes);
+app.use('/api/v1/rooms', roomRoutes);
 
 app.listen(PORT, HOSTNAME, () => {
     console.log(`Server connected in ${process.env.NODE_ENV} mode on port ${PORT}`);

@@ -25,6 +25,11 @@ const complaintSchema = new Schema({
     title: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['RESOLVED', 'UNRESOLVED', 'DELETED'],
+        default: 'UNRESOLVED'
     }
 });
 
