@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const complaintSchema = new Schema({
-    complaint: {
+    text: {
         type: String,
         required: true
     },

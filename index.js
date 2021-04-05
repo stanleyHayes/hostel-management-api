@@ -10,6 +10,10 @@ import hostelRoutes from "./routes/hostels.js";
 import userRoutes from "./routes/users.js";
 import authenticationRoutes from "./routes/authentication.js";
 import roomRoutes from "./routes/rooms.js";
+import reviewRoutes from "./routes/reviews.js";
+import complaintRoutes from "./routes/complaints.js";
+import managerOccupationsRoutes from "./routes/manager-occupations.js";
+import roomOccupationRoutes from "./routes/room-occupations.js";
 
 mongoose.connect(process.env.MONGODB_URI, {
     useFindAndModify: false,
@@ -36,6 +40,11 @@ app.use('/api/v1/hostels', hostelRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authenticationRoutes);
 app.use('/api/v1/rooms', roomRoutes);
+
+app.use('/api/v1/reviews', reviewRoutes);
+app.use('/api/v1/complaints', complaintRoutes);
+app.use('/api/v1/managers-occupations', managerOccupationsRoutes);
+app.use('/api/v1/room-occupations', roomOccupationRoutes);
 
 app.listen(PORT, HOSTNAME, () => {
     console.log(`Server connected in ${process.env.NODE_ENV} mode on port ${PORT}`);

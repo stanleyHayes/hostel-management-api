@@ -4,16 +4,13 @@ import geocoder from "../utils/geocoder.js";
 export const createHostel = async (req, res) => {
     try {
         const {name, facilities, country, city, address} = req.body;
-
         const decodedAddress = await geocoder.geocode({country, city, address});
-
         let hostel = await Hostel.create({
             name,
             facilities,
             address: {...decodedAddress[0], country, city},
             location: {coordinates: [decodedAddress[0].longitude, decodedAddress[0].latitude]}
         });
-
         res.status(201).json({
             message: `${name} created successfully`,
             data: hostel
@@ -55,6 +52,16 @@ export const updateHostel = async (req, res) => {
     try {
         const updates = Object.keys(req.body);
         const allowedUpdates = ['name', 'facilities', 'address'];
+        const isAllowed = updates.every(update => allowedUpdates.includes(update));
+        if(!isAllowed){
+            return res.status(400).json({data: null, message: `Updates not allowed`});
+        }
+        const hostel = await Hostel.findById(req.params.id);
+        for(let key of updates){
+            hostel[key] = req.body[key];
+        }
+        await hostel.save();
+        res.status(200).json({data: hostel, message: 'Hostel successfully updated'});
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
@@ -67,7 +74,8 @@ export const deleteHostel = async (req, res) => {
         if(!hostel){
             return res.status(404).json({data: null, message: 'Hostel not found'});
         }
-        await hostel.remove();
+        hostel.status = 'DELETED';
+        await hostel.save();
         res.status(200).json({data: hostel, message: 'Hostel removed'});
     } catch (e) {
         return res.status(500).json({message: e.message});
