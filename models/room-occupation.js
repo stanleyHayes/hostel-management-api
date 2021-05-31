@@ -16,11 +16,11 @@ const roomOccupationSchema = new Schema({
         type: Number,
         required: true
     },
-    start_date: {
+    startDate: {
         type: Date,
         required: true
     },
-    end_date: {
+    endDate: {
         type: Date,
         required: true
     },

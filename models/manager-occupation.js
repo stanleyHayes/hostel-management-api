@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const managerOccupationSchema = new Schema({
@@ -7,23 +8,25 @@ const managerOccupationSchema = new Schema({
         required: true,
         ref: "Hostel"
     },
-    duration: {
-        type: Number,
-        required: true
-    },
-    start_date: {
+    startDate: {
         type: Date,
         required: true
     },
-    end_date: {
+    endDate: {
         type: Date,
         required: true
     },
     status: {
         type: String,
-        enum: ['EMPLOYED', 'FIRED', 'ENDED']
+        enum: ['EMPLOYED', 'FIRED', 'ENDED', 'DELETED'],
+        default: 'EMPLOYED'
     },
-    user: {
+    manager: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
+    assignedBy: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "User"
